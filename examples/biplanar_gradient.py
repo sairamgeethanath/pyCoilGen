@@ -2,25 +2,14 @@
 ==============================================================
 PLANAR MRI GRADIENT COIL DESIGN PIPELINE
 ==============================================================
-
-Geometry
---------
-Plate size: 0.06 m x 0.06 m
-Plate positions: z = ±0.03675 m
-
-Target regions
---------------
-Imaging DSV radius: 0.016 m
-Optimization DSV radius: 0.04 m
-
-Output
-------
-plate_top.stl
-plate_bottom.stl
-gradient_wire_channel_plate.stl
-
-Author: SG + Experimental Gradient Builder - ChatGPT
-==============================================================
+This example demonstrates the design of a biplanar gradient coil using pyCoilGen. The pipeline includes the following steps:
+1. Design the STL file for the current-carrying surface and save it.
+2. Check the STL file quality and visualize the geometry.
+3. Configure pyCoilGen inputs for the coil design.
+4. Run pyCoilGen to obtain the coil design and wire patterns.
+5. Simulate the coil design using Magpylib to obtain the magnetic field distribution.
+6. Evaluate the performance metrics of the gradient coil design.
+7. Write the STL files for the coil parts (plates and wire channels) for CNC machining or 3D printing.
 """
 import sys
 sys.path.append('.')

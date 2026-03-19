@@ -1248,21 +1248,21 @@ def generate_gradient_former(
                     strain_relief_segments.append(relief)
 
                 # ---- Loop numbering ----
-                try:
-                    num_text = trimesh.creation.text(
-                        text=str(loop_index+1),
-                        height=wire_width_mm*2,
-                        depth=0.5
-                    )
-                    # place number at first point of loop, slightly above plate
-                    num_text.apply_translation([
-                        path[0][0],
-                        path[0][1],
-                        plate_height_mm - 0.3
-                    ])
-                    numbering_meshes.append(num_text)
-                except Exception as e:
-                    print(f"⚠️ Loop numbering failed for loop {loop_index+1}: {e}")
+                # try:
+                #     num_text = trimesh.creation.text(
+                #         text=str(loop_index+1),
+                #         height=wire_width_mm*2,
+                #         depth=0.5
+                #     )
+                #     # place number at first point of loop, slightly above plate
+                #     num_text.apply_translation([
+                #         path[0][0],
+                #         path[0][1],
+                #         plate_height_mm - 0.3
+                #     ])
+                #     numbering_meshes.append(num_text)
+                # except Exception as e:
+                #     print(f"⚠️ Loop numbering failed for loop {loop_index+1}: {e}")
 
             # ---- Combine all cutters ----
             tube = trimesh.util.concatenate(all_segments)
@@ -1275,22 +1275,22 @@ def generate_gradient_former(
             # ---- Offset tube slightly into plate for engraving/groove ----
             cutter.apply_translation([0,0,plate_height_mm*0.75])
 
-            # ---- Plate engraving ----
-            label = "TOP" if part_index==0 else "BOTTOM"
-            try:
-                text_mesh = trimesh.creation.text(
-                    text=label,
-                    height=plate_radius_mm*0.15,
-                    depth=0.5
-                )
-                text_mesh.apply_translation([
-                    -plate_radius_mm*0.3,
-                    -plate_radius_mm*0.8,
-                    plate_height_mm - 0.5
-                ])
-                cutter = trimesh.util.concatenate([cutter, text_mesh])
-            except:
-                print("⚠️ Plate engraving skipped")
+            # # ---- Plate engraving ----
+            # label = "TOP" if part_index==0 else "BOTTOM"
+            # try:
+            #     text_mesh = trimesh.creation.text(
+            #         text=label,
+            #         height=plate_radius_mm*0.15,
+            #         depth=0.5
+            #     )
+            #     text_mesh.apply_translation([
+            #         -plate_radius_mm*0.3,
+            #         -plate_radius_mm*0.8,
+            #         plate_height_mm - 0.5
+            #     ])
+            #     cutter = trimesh.util.concatenate([cutter, text_mesh])
+            # except:
+            #     print("⚠️ Plate engraving skipped")
 
             # ---- Boolean difference ----
             result = plate.difference(cutter)

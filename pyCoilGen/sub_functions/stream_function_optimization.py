@@ -21,7 +21,7 @@ from scipy.sparse import csr_matrix, block_diag
 log = logging.getLogger(__name__)
 
 
-def stream_function_optimization(coil_parts: List[CoilPart], target_field, input_args) -> (List[CoilPart], np.ndarray, np.ndarray):
+def stream_function_optimization(coil_parts: List[CoilPart], target_field, input_args) -> tuple[List[CoilPart], np.ndarray, np.ndarray]:
     """
     Performs stream function optimization on coil parts.
 
