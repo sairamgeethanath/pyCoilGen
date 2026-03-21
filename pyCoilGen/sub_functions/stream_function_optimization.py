@@ -11,12 +11,11 @@ import logging
 from .data_structures import DataStructure, CoilPart
 from .constants import get_level, DEBUG_NONE, DEBUG_VERBOSE
 from pyCoilGen.helpers.common import blkdiag
-from .get_streamfunction import solve_streamfunction_with_initial_guess
+# from .get_streamfunction import solve_streamfunction_with_initial_guess
 from scipy.sparse import csr_matrix, diags
 from scipy.sparse.linalg import lsqr
 from matplotlib.tri import Triangulation
-from .utils import compute_cotangent_laplacian, plot_coil_stream_function
-from scipy.sparse import csr_matrix, block_diag
+# from scipy.sparse import csr_matrix, block_diag
 
 log = logging.getLogger(__name__)
 

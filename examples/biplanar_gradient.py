@@ -23,8 +23,12 @@ import logging
 from pyCoilGen.pyCoilGen_release import pyCoilGen
 from pyCoilGen.pyCoilGen_planar import pyCoilGen_planar
 from scipy.special import sph_harm_y
-from pyCoilGen.sub_functions.utils import *
+# from pyCoilGen.sub_functions.utils import *
 from pyCoilGen.sub_functions.stl_mesh_generation import *
+from pyCoilGen.sub_functions.simulate_gradient_coil import simulate_gradient_coil
+from pyCoilGen.sub_functions.gradient_former import generate_gradient_former
+from pyCoilGen.helpers.metrics import print_metrics
+
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
@@ -45,7 +49,7 @@ if __name__ == "__main__":
     PLATE_SIZE = 152.4e-3 # in meters, 6 inches
     PLATE_TOP = 0.03675
     PLATE_BOTTOM = -0.03675
-    DSV_IMAGING = 0.04 # in meters, diameter of the spherical imaging region
+    DSV_IMAGING = 0.032 # in meters, diameter of the spherical imaging region
     CNC = {
         "diameter": 2e-3,   # meters
         "current": 1.0,         # current per contour (amps)
@@ -75,7 +79,7 @@ if __name__ == "__main__":
     # STEP 3 - CONFIGURE PYCOILGEN INPUTS
     #=========================================================
     arg_dict = {
-        'field_shape_function': 'x',  # definition of the target field
+        'field_shape_function': 'z',  # definition of the target field
         'coil_mesh_file': stl_path.split('/')[-1],# assumes the STL file is in the Geometry_Data folder 
         # 'target_mesh_file': None,
         'secondary_target_mesh_file': 'none',

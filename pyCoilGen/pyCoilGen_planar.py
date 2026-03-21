@@ -56,7 +56,7 @@ from .sub_functions.load_preoptimized_data import load_preoptimized_data
 from .sub_functions.evaluate_field_errors import evaluate_field_errors
 from .sub_functions.calculate_gradient import calculate_gradient
 from .sub_functions.export_data import export_data, check_exporter_help
-from .sub_functions.utils import *
+from .sub_functions.extract_wire_paths import extract_wire_paths
 
 
 # Set up logging
@@ -286,20 +286,22 @@ def pyCoilGen_planar(log, input_args=None):
         runpoint_tag = '09'
 
         if get_level() >= DEBUG_VERBOSE:
-            mesh = coil_parts[0].coil_mesh  # Assuming you have one coil part
-            verts = mesh.v    # Nx3
-            faces = mesh.f    # Mx3
-            psis_values = psis  # stream function per face
+            for part_ind in range(len(coil_parts)):
+                coil_part = coil_parts[part_ind]
+                log.info("Part %d: potential levels: %s", part_ind, coil_part.potential_level_list)
+                mesh = coil_parts[part_ind].coil_mesh  # Assuming you have one coil part
+                verts = mesh.v    # Nx3
+                faces = mesh.f    # Mx3
+                psis = coil_parts[part_ind].stream_function
+                # Compute triangle centers
+                triang = mtri.Triangulation(verts[:,0], verts[:,1], faces)
 
-            # Compute triangle centers
-            triang = mtri.Triangulation(verts[:,0], verts[:,1], faces)
-
-            plt.figure(figsize=(6,6))
-            plt.tricontourf(triang, psis, levels= coil_parts[0].potential_level_list, cmap='jet')
-            plt.colorbar(label="Stream function ψ")
-            plt.axis('equal')
-            plt.title("Streamfunction on coil surface")
-            plt.show()
+                plt.figure(figsize=(6,6))
+                plt.tricontourf(triang, psis, levels= coil_parts[part_ind].potential_level_list, cmap='jet')
+                plt.colorbar(label="Stream function ψ")
+                plt.axis('equal')
+                plt.title("Streamfunction on coil surface")
+                plt.show()
 
         # Extract wire patterns
 
