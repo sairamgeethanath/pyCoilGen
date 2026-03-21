@@ -15,7 +15,8 @@ sympy==1.*
 
 # For visualisation of matrices
 pillow<=9.5
-matplotlib==3.*certifi==2026.2.25
+matplotlib==3.*
+certifi==2026.2.25
 charset-normalizer==3.4.6
 docopt==0.6.2
 idna==3.11
