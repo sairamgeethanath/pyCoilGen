@@ -64,6 +64,45 @@ log = logging.getLogger(__name__)
 
 
 def pyCoilGen_planar(log, input_args=None):
+    """
+    Generate optimized planar coil layouts using stream function optimization.
+    This module implements the pyCoilGen algorithm for designing planar gradient coils.
+    It reads a mesh geometry, optimizes a stream function to match a target magnetic field,
+    and extracts wire patterns for coil fabrication.
+    The workflow consists of the following main steps:
+    1. Read and preprocess the input mesh (refinement, parameterization)
+    2. Define target magnetic field specifications
+    3. Calculate basis functions and sensitivity matrices
+    4. Optimize stream function using constrained optimization
+    5. Discretize the stream function into wire contours
+    6. Extract and interconnect wire paths
+    Args:
+        log (logging.Logger): Logger instance for recording execution progress and errors.
+        input_args (dict, optional): Dictionary or parsed input arguments containing:
+            - project_name (str): Name of the coil project
+            - debug (int): Debug verbosity level
+            - persistence_dir (str): Directory for saving intermediate results
+            - output_directory (str): Directory for saving output files
+            - sf_source_file (str): Path to preoptimized stream function file ('none' to skip)
+            - sf_dest_file (str): Path to save preoptimized data ('none' to skip)
+            - target_field_weighting (bool): Whether to apply radial weighting to target field
+            - normal_shift_length (float): Wire width parameter
+            - interconnection_cut_width (float): Wire thickness parameter
+            Defaults to None, which triggers interactive input parsing.
+    Returns:
+        list or CoilSolution: List of CoilPart objects containing optimized coil geometry
+            and wire patterns. Returns None if mesh loading fails. If exporter help is
+            requested, returns empty CoilSolution object.
+    Raises:
+        Exception: Re-raises any exceptions that occur during optimization with error
+            context indicating the last successful runpoint.
+    Notes:
+        - Adapted from original pyCoilGen with customization for planar gradient coils
+        - External dependencies: NumPy, Trimesh, Matplotlib
+        - Timing information is logged for performance profiling
+        - Intermediate results can be saved/loaded for iterative design
+    """
+
     # Create optimized coil finished coil layout
     # Author: Philipp Amrein, University Freiburg, Medical Center, Radiology, Medical Physics
     # 5.10.2021
@@ -74,6 +113,8 @@ def pyCoilGen_planar(log, input_args=None):
     # based on desbrun et al (2002), "Intrinsic Parameterizations of {Surface} Meshes", NS (2021).
     # Curve intersections (https://www.mathworks.com/matlabcentral/fileexchange/22441-curve-intersections),
     # MATLAB Central File Exchange.
+
+
 
     timer = Timing()
     timer.start()

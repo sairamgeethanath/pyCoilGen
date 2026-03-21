@@ -7,6 +7,30 @@ import matplotlib.pyplot as plt
 # ==========================================================
 
 def print_metrics(Bz, coords, axis = 'x'):
+    """
+    Print and visualize magnetic gradient field metrics.
+    This function creates a 3D scatter plot of the magnetic field and computes
+    gradient efficiency and linearity error metrics along the specified axis.
+    Args:
+        Bz (numpy.ndarray): Magnetic field values in Tesla. 1D array of field
+            measurements at each coordinate point.
+        coords (numpy.ndarray): Coordinate positions. 2D array of shape (N, 3)
+            containing x, y, z coordinates in meters for each field measurement.
+        axis (str, optional): Axis along which to evaluate gradient metrics.
+            Must be one of 'x', 'y', or 'z'. Defaults to 'x'.
+    Returns:
+        None
+    Raises:
+        ValueError: If axis is not one of 'x', 'y', or 'z'.
+    Prints:
+        - Gradient efficiency (mT/m/A): Linear fit slope along specified axis.
+        - Max linearity error within DSV (%): Maximum deviation from linear fit
+            expressed as a percentage of the maximum fitted value.
+    Note:
+        The function assumes the measurement points within the designated
+        sampling volume (DSV) are those within ±1 mm of the respective axis.
+    """
+
 
     x = coords[:, 0]
     y = coords[:, 1]

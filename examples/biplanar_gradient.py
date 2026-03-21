@@ -1,16 +1,3 @@
-"""
-==============================================================
-PLANAR MRI GRADIENT COIL DESIGN PIPELINE
-==============================================================
-This example demonstrates the design of a biplanar gradient coil using pyCoilGen. The pipeline includes the following steps:
-1. Design the STL file for the current-carrying surface and save it.
-2. Check the STL file quality and visualize the geometry.
-3. Configure pyCoilGen inputs for the coil design.
-4. Run pyCoilGen to obtain the coil design and wire patterns.
-5. Simulate the coil design using Magpylib to obtain the magnetic field distribution.
-6. Evaluate the performance metrics of the gradient coil design.
-7. Write the STL files for the coil parts (plates and wire channels) for CNC machining or 3D printing.
-"""
 import sys
 sys.path.append('.')
 from pyCoilGen.sub_functions.constants import DEBUG_BASIC, DEBUG_VERBOSE
@@ -37,6 +24,46 @@ log = logging.getLogger(__name__)
 # ==========================================================
 
 if __name__ == "__main__":
+
+    """Planar MRI gradient coil design pipeline using pyCoilGen.
+    This script demonstrates a complete end-to-end workflow for designing,
+    simulating, evaluating, and exporting a biplanar MRI gradient coil.
+    Workflow:
+        1. Create and save an STL mesh for the current-carrying planar surfaces.
+        2. Validate mesh quality and visualize geometry.
+        3. Configure pyCoilGen optimization and discretization parameters.
+        4. Run planar coil synthesis with ``pyCoilGen_planar``.
+        5. Simulate magnetic field behavior over the DSV with Magpylib helpers.
+        6. Compute and print gradient performance metrics.
+        7. Export coil former and wire-channel STL files for fabrication.
+    Attributes:
+        PLATE_SIZE (float): Plate width/height in meters (6 in).
+        PLATE_TOP (float): Z position of the top plate in meters.
+        PLATE_BOTTOM (float): Z position of the bottom plate in meters.
+        DSV_IMAGING (float): Diameter of the spherical imaging region in meters.
+        CNC (dict[str, float]): Fabrication and conductor parameters:
+            - ``diameter``: Conductor diameter in meters.
+            - ``current``: Current per contour in amperes.
+            - ``thickness``: Wire thickness / cut width in meters.
+            - ``width``: Wire width / normal shift length in meters.
+        MESH_RESOLUTION (int): General mesh-resolution control value.
+    Notes:
+        - The target field is configured through ``field_shape_function`` (e.g., "z").
+        - ``target_gradient_strength`` is interpreted in T/m at 1 A drive current.
+        - Output artifacts (plots, debug data, exported STL files) are written to
+        the configured project/output directories.
+    ==============================================================
+    PLANAR MRI GRADIENT COIL DESIGN PIPELINE
+    ==============================================================
+    This example demonstrates the design of a biplanar gradient coil using pyCoilGen. The pipeline includes the following steps:
+    1. Design the STL file for the current-carrying surface and save it.
+    2. Check the STL file quality and visualize the geometry.
+    3. Configure pyCoilGen inputs for the coil design.
+    4. Run pyCoilGen to obtain the coil design and wire patterns.
+    5. Simulate the coil design using Magpylib to obtain the magnetic field distribution.
+    6. Evaluate the performance metrics of the gradient coil design.
+    7. Write the STL files for the coil parts (plates and wire channels) for CNC machining or 3D printing.
+    """
 
     log.info("\n========================================")
     log.info("PLANAR GRADIENT COIL DESIGN PIPELINE")
@@ -73,7 +100,7 @@ if __name__ == "__main__":
     # STEP 2 - CHECK THE STL FILE QUALITY AND VISUALIZE THE GEOMETRY
     #========================================================
     mesh = trimesh.load(stl_path)
-    check_mesh_quality(mesh, dsv_radius=DSV_IMAGING * 0.5, visualize=True)
+    check_mesh_quality(mesh, dsv_radius=DSV_IMAGING * 0.5)
     
     #=========================================================
     # STEP 3 - CONFIGURE PYCOILGEN INPUTS

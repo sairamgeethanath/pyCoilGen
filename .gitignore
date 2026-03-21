@@ -55,6 +55,34 @@ ChatGPT*.txt
 /dist/
 
 # Other common temporary files
-*.log
 *.tmp
 *.npy
+
+# Generated geometry
+*.stl
+*.step
+*.stp
+*.obj
+
+# PCB / fabrication outputs
+*.gbr
+*.gerber
+*.drl
+
+# Simulation / intermediate outputs
+*.vtk
+*.vtu
+*.npy
+*.npz
+
+# Plot outputs
+*.png
+*.jpg
+*.svg
+
+# Temporary / logs
+*.log
+tmp/
+output/
+build/
+dist/

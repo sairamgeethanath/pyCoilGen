@@ -10,6 +10,7 @@ from pyCoilGen.plotting.plot_wire_loops import plot_gerber_paths, plot_stl_patch
 # ==========================================================
 
 def generate_gradient_former(
+
         coil_parts,
         output_prefix="gradient_plate",
         plate_diameter_m=0.1524,
@@ -17,14 +18,41 @@ def generate_gradient_former(
         wire_width_m=0.002,
         display_debug_plots=True,
         save_loop_coords=True):
-
+    
     """
-    Export gradient coil loops as RS-274X Gerber for CNC fabrication
-    and provide 2D visualization including wire width for overlap checks.
-
-    Also exports complement Gerber files where the copper region is the
-    inverse of the wire paths for isolation milling.
+    Generate gradient former coil plates with Gerber files and STL models.
+    This function processes coil parts to generate PCB gradient coils with
+    traces, plate geometries, and 3D printable STL files. It creates Gerber
+    files for manufacturing and optional 3D models with features including
+    tubes, alignment pins, terminal holes, and strain relief.
+    Args:
+        coil_parts (list): List of coil part objects, each containing wire_loops
+            with path and sign attributes.
+        output_prefix (str, optional): Prefix for output filenames. 
+            Defaults to "gradient_plate".
+        plate_diameter_m (float, optional): Diameter of the plate in meters.
+            Defaults to 0.1524 (6 inches).
+        plate_thickness_m (float, optional): Thickness of the plate in meters.
+            Defaults to 0.003 (3 mm).
+        wire_width_m (float, optional): Width of wire traces in meters.
+            Defaults to 0.002 (2 mm).
+        display_debug_plots (bool, optional): Whether to display debug
+            visualization plots. Defaults to True.
+        save_loop_coords (bool, optional): Whether to save loop coordinates
+            to text files. Defaults to True.
+    Returns:
+        None
+    Raises:
+        Exception: If STL generation or boolean operations fail during
+            3D model creation.
+    Note:
+        Generated files include:
+        - Gerber track files (.gbr)
+        - Complement Gerber files (.gbr)
+        - Loop coordinate files (.txt) if save_loop_coords is True
+        - Final STL models (.stl) for 3D printing
     """
+
 
 
 
