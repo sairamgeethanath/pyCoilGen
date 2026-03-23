@@ -90,3 +90,4 @@ vtk==9.6.0
 yarg==0.1.10
 magpylib==5.2.2
 trimesh==4.11.4
+manifold3d==3.4.0
